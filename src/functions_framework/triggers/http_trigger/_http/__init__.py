@@ -11,8 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
-from functions_framework._http.flask import FlaskApplication
+from functions_framework.triggers.http_trigger._http.flask import FlaskApplication
 
 
 class HTTPServer:
@@ -25,7 +24,9 @@ class HTTPServer:
             self.server_class = FlaskApplication
         else:
             try:
-                from functions_framework._http.gunicorn import GunicornApplication
+                from functions_framework.triggers.http_trigger._http.gunicorn import (
+                    GunicornApplication,
+                )
 
                 self.server_class = GunicornApplication
             except ImportError as e:

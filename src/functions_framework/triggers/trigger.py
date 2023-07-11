@@ -1,4 +1,4 @@
-# Copyright 2020 Google LLC
+# Copyright 2023 The OpenFunction Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -11,12 +11,13 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+from abc import ABC, abstractmethod
 
-try:
-    import pkg_resources
+from functions_framework.context.runtime_context import RuntimeContext
 
-    pkg_resources.declare_namespace(__name__)
-except ImportError:
-    import pkgutil
 
-    __path__ = pkgutil.extend_path(__path__, __name__)
+class TriggerHandler(ABC):
+    @abstractmethod
+    def start(self, context: RuntimeContext):
+        pass
+

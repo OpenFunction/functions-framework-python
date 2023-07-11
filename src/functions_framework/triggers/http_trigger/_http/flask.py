@@ -12,26 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import gunicorn.app.base
 
-
-class GunicornApplication(gunicorn.app.base.BaseApplication):
+class FlaskApplication:
     def __init__(self, app, host, port, debug, **options):
-        self.options = {
-            "bind": "%s:%s" % (host, port),
-            "workers": 1,
-            "threads": 8,
-            "timeout": 0,
-            "loglevel": "error",
-            "limit_request_line": 0,
-        }
-        self.options.update(options)
         self.app = app
-        super().__init__()
+        self.host = host
+        self.port = port
+        self.debug = debug
+        self.options = options
 
-    def load_config(self):
-        for key, value in self.options.items():
-            self.cfg.set(key, value)
-
-    def load(self):
-        return self.app
+    def run(self):
+        self.app.run(self.host, self.port, debug=self.debug, **self.options)
