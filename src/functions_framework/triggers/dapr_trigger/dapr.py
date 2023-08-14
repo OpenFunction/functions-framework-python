@@ -25,6 +25,7 @@ from functions_framework.triggers.trigger import TriggerHandler
 
 class DaprTriggerHandler(TriggerHandler):
     """Handle dapr trigger."""
+
     def __init__(self, port, triggers: [DaprTrigger] = None, user_function=None):
         self.port = port
         self.triggers = triggers
@@ -39,17 +40,23 @@ class DaprTriggerHandler(TriggerHandler):
 
         for trigger in self.triggers:
             if trigger.component_type.startswith("bindings"):
+
                 @self.app.binding(trigger.name)
                 def binding_handler(request: BindingRequest):
                     rt_ctx = deepcopy(context)
-                    user_ctx = UserContext(runtime_context=rt_ctx, binding_request=request, logger=logger)
+                    user_ctx = UserContext(
+                        runtime_context=rt_ctx, binding_request=request, logger=logger
+                    )
                     self.user_function(user_ctx)
 
             if trigger.component_type.startswith("pubsub"):
+
                 @self.app.subscribe(pubsub_name=trigger.name, topic=trigger.topic)
                 def topic_handler(event: v1.Event):
                     rt_ctx = deepcopy(context)
-                    user_ctx = UserContext(runtime_context=rt_ctx, topic_event=event, logger=logger)
+                    user_ctx = UserContext(
+                        runtime_context=rt_ctx, topic_event=event, logger=logger
+                    )
                     self.user_function(user_ctx)
 
         self.app.run(self.port)

@@ -25,8 +25,16 @@ from functions_framework.triggers.http_trigger.http import HTTPTriggerHandler
 
 
 class Runner:
-    def __init__(self, context: FunctionContext, target=None, source=None,
-                 host=None, port=None, debug=None, dry_run=None):
+    def __init__(
+        self,
+        context: FunctionContext,
+        target=None,
+        source=None,
+        host=None,
+        port=None,
+        debug=None,
+        dry_run=None,
+    ):
         self.target = target
         self.source = source
         self.context = context
@@ -54,7 +62,9 @@ class Runner:
         source_module, spec = _function_registry.load_function_module(_source)
         spec.loader.exec_module(source_module)
 
-        self.user_function = _function_registry.get_user_function(_source, source_module, _target)
+        self.user_function = _function_registry.get_user_function(
+            _source, source_module, _target
+        )
 
     def init_logger(self):
         level = logging.INFO
@@ -68,10 +78,18 @@ class Runner:
 
         _trigger = runtime_context.get_http_trigger()
         if _trigger:
-            http_trigger = HTTPTriggerHandler(self.context.port, _trigger, self.source, self.target, self.user_function)
+            http_trigger = HTTPTriggerHandler(
+                self.context.port,
+                _trigger,
+                self.source,
+                self.target,
+                self.user_function,
+            )
             http_trigger.start(runtime_context, logger=self.logger)
 
         _triggers = runtime_context.get_dapr_triggers()
         if _triggers:
-            dapr_trigger = DaprTriggerHandler(self.context.port, _triggers, self.user_function)
+            dapr_trigger = DaprTriggerHandler(
+                self.context.port, _triggers, self.user_function
+            )
             dapr_trigger.start(runtime_context, logger=self.logger)

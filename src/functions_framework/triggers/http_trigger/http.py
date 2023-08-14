@@ -23,7 +23,16 @@ from functions_framework.triggers.trigger import TriggerHandler
 
 class HTTPTriggerHandler(TriggerHandler):
     """Handle http trigger."""
-    def __init__(self, port, trigger: HTTPRoute, source=None, target=None, user_function=None, debug=False):
+
+    def __init__(
+        self,
+        port,
+        trigger: HTTPRoute,
+        source=None,
+        target=None,
+        user_function=None,
+        debug=False,
+    ):
         self.port = trigger.port if trigger.port else port
         self.source = source
         self.target = target

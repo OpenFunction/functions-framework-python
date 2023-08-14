@@ -89,7 +89,9 @@ def _http_view_func_wrapper(function, runtime_context: RuntimeContext, request, 
     @functools.wraps(function)
     def view_func(path):
         rt_ctx = deepcopy(runtime_context)
-        user_ctx = UserContext(runtime_context=rt_ctx, http_request=request, logger=logger)
+        user_ctx = UserContext(
+            runtime_context=rt_ctx, http_request=request, logger=logger
+        )
         return function(user_ctx)
 
     return view_func
@@ -102,7 +104,9 @@ def _configure_app(wsgi_app, runtime_context: RuntimeContext, function, logger):
     wsgi_app.url_map.add(werkzeug.routing.Rule("/robots.txt", endpoint="error"))
     wsgi_app.url_map.add(werkzeug.routing.Rule("/favicon.ico", endpoint="error"))
     wsgi_app.url_map.add(werkzeug.routing.Rule("/<path:path>", endpoint="run"))
-    wsgi_app.view_functions["run"] = _http_view_func_wrapper(function, runtime_context, flask.request, logger)
+    wsgi_app.view_functions["run"] = _http_view_func_wrapper(
+        function, runtime_context, flask.request, logger
+    )
     wsgi_app.view_functions["error"] = lambda: flask.abort(404, description="Not Found")
     wsgi_app.after_request(read_request)
 
@@ -127,7 +131,9 @@ def crash_handler(e):
     return str(e), 500, {_FUNCTION_STATUS_HEADER_FIELD: _CRASH}
 
 
-def create_app(runtime_context: RuntimeContext = None, target=None, source=None, logger=None):
+def create_app(
+    runtime_context: RuntimeContext = None, target=None, source=None, logger=None
+):
     _target = _function_registry.get_function_target(target)
     _source = _function_registry.get_function_source(source)
 
