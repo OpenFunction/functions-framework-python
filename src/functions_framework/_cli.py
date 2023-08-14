@@ -26,7 +26,7 @@ from functions_framework.runner import Runner
 @click.option("--dry-run", envvar="DRY_RUN", is_flag=True)
 def _cli(target, source, host, port, debug, dry_run):
     # fetch the context
-    context = _function_registry.get_openfunction_context('')
+    context = _function_registry.get_openfunction_context("")
 
     runner = Runner(context, target, source, host, port, debug, dry_run)
     runner.run()

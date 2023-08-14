@@ -25,8 +25,14 @@ from functions_framework.openfunction.function_out import FunctionOut
 class UserContext(object):
     """Context for user."""
 
-    def __init__(self, runtime_context: RuntimeContext = None,
-                 binding_request=None, topic_event=None, http_request=None, logger=None):
+    def __init__(
+        self,
+        runtime_context: RuntimeContext = None,
+        binding_request=None,
+        topic_event=None,
+        http_request=None,
+        logger=None,
+    ):
         self.runtime_context = runtime_context
         self.logger = logger
         self.out = FunctionOut(0, None, "", {})
@@ -73,11 +79,17 @@ class UserContext(object):
 
         target = outputs[output_name]
         if target.component_type.startswith(constants.DAPR_BINDING_TYPE):
-            resp = self.dapr_client.invoke_binding(target.component_name, target.operation, data, target.metadata)
+            resp = self.dapr_client.invoke_binding(
+                target.component_name, target.operation, data, target.metadata
+            )
         elif target.component_type.startswith(constants.DAPR_PUBSUB_TYPE):
             data = json.dumps(data)
             resp = self.dapr_client.publish_event(
-                target.component_name, target.topic, data,
-                data_content_type=constants.DEFAULT_DATA_CONTENT_TYPE, publish_metadata=target.metadata)
+                target.component_name,
+                target.topic,
+                data,
+                data_content_type=constants.DEFAULT_DATA_CONTENT_TYPE,
+                publish_metadata=target.metadata,
+            )
 
         return resp

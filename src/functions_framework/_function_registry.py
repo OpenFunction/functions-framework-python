@@ -71,8 +71,11 @@ def get_user_function(source, source_module, target):
         raise InvalidFunctionSignatureException(
             "The function defined in file {source} as {target} needs to be of "
             "function signature {signature}, but got {target_signature}".format(
-                source=source, target=target, signature=FUNCTION_SIGNATURE_RULE,
-                target_signature=inspect.signature(function))
+                source=source,
+                target=target,
+                signature=FUNCTION_SIGNATURE_RULE,
+                target_signature=inspect.signature(function),
+            )
         )
 
     return function
@@ -142,13 +145,10 @@ def get_func_signature_type(func_name: str, signature_type: str) -> str:
 
 def get_openfunction_context(func_context: str) -> FunctionContext:
     """Get openfunction context"""
-    context_str = (
-        func_context
-        or os.environ.get(FUNC_CONTEXT)
-    )
+    context_str = func_context or os.environ.get(FUNC_CONTEXT)
 
     if context_str:
         context = FunctionContext.from_json(json.loads(context_str))
         return context
-   
+
     return None

@@ -58,7 +58,7 @@ setup(
         "dapr>=1.10.0",
         "aiohttp==3.8.4",
         "dapr-ext-grpc>=1.10.0",
-        "dapr-ext-fastapi>=1.10.0"
+        "dapr-ext-fastapi>=1.10.0",
     ],
     entry_points={
         "console_scripts": [
