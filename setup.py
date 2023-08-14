@@ -24,8 +24,8 @@ with open(path.join(here, "README.md"), encoding="utf-8") as f:
     long_description = f.read()
 
 setup(
-    name="functions-framework",
-    version="3.1.0",
+    name="ofn-functions-framework",
+    version="0.2.0",
     description="An open source FaaS (Function as a service) framework for writing portable Python functions.",
     long_description=long_description,
     long_description_content_type="text/markdown",
