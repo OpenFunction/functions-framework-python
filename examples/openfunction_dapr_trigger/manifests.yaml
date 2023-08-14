@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ff-python
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ff-python
+  template:
+    metadata:
+      labels:
+        app: ff-python
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "ff-python"
+        dapr.io/app-port: "50055"
+        dapr.io/app-protocol: "grpc"
+    spec:
+      containers:
+        - name: ff-python
+          image: ff-python:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 50055

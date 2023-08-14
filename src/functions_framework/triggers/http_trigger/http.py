@@ -28,8 +28,6 @@ class HTTPTriggerHandler(TriggerHandler):
         self.source = source
         self.target = target
         self.trigger = trigger
-        self.hostname = trigger.hostname
-        self.route_rules = trigger.rules
         self.user_function = user_function
         self.debug = debug
         if self.port == 0:
@@ -41,6 +39,3 @@ class HTTPTriggerHandler(TriggerHandler):
 
         app = create_app(context, self.target, self.source, logger)
         create_server(app, self.debug).run("0.0.0.0", self.port)
-
-
-
