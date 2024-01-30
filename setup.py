@@ -56,7 +56,7 @@ setup(
         "gunicorn>=19.2.0,<21.0; platform_system!='Windows'",
         "cloudevents>=1.2.0,<2.0.0",
         "dapr>=1.10.0",
-        "aiohttp==3.8.6",
+        "aiohttp==3.9.2",
         "dapr-ext-grpc>=1.10.0",
         "dapr-ext-fastapi>=1.10.0",
     ],
