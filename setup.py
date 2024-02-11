@@ -49,7 +49,7 @@ setup(
     package_dir={"": "src"},
     python_requires=">=3.5, <4",
     install_requires=[
-        "grpcio==1.54.2",
+        "grpcio==1.54.3",
         "flask>=1.0,<3.0",
         "click>=7.0,<9.0",
         "uvicorn>=0.22.0",
